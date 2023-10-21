@@ -1,0 +1,8 @@
+#btn:hover,
+#btn:active{
+  background-color: rgb(10, 168, 10);
+}
+#load:hover,
+#load:active{
+  background-color: rgb(10, 168, 10);
+}
