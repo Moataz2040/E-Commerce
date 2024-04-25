@@ -8,14 +8,15 @@ import toast  from 'react-hot-toast';
 
 export default function FeatureProducts() {
   const [allProducts,setAllProducts]=useState([]);
-  let {createCart}=useContext(CartContext)
+  let {createCart,setNumOfCartItems}=useContext(CartContext)
   
   async function generateCart(productId) {
     let response = await createCart(productId)
     if(response.data.status == "success"){
-      toast.success(response.data.message)
+      toast.success(response.data.message);
+      setNumOfCartItems(response.data.numOfCartItems);
     }else{
-      toast.error(response.data.message)
+      toast.error(response.data.message);
     }
   }
   async function getProducts() {
@@ -30,7 +31,7 @@ export default function FeatureProducts() {
     <div className="container py-5">
       <div className="row">
         {allProducts?.map((product)=>(
-          <div className="col-md-2" key={product.id}>
+          <div className="col-sm-4 col-md-3 col-lg-2 col-10 mx-auto" key={product.id}>
             <div className="product px-2 py-3">
               <Link className='productsLink' to={'/product-details/'+product.id}>
               <img src={product.imageCover} className='w-100' alt="" />

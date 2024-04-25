@@ -7,12 +7,13 @@ import { useParams } from 'react-router-dom'
 import { CartContext } from '../../Context/CartContext';
 import toast  from 'react-hot-toast';
 export default function ProductDetails() {
-  let {createCart}=useContext(CartContext)
+  let {createCart,setNumOfCartItems}=useContext(CartContext)
 
   async function generateProductDetails(productId) {
     let response = await createCart(productId)
     if(response.data.status == "success"){
       toast.success(response.data.message)
+      setNumOfCartItems(response.data.numOfCartItems)
     }else{
       toast.error(response.data.message)
     }

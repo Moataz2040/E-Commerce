@@ -10,11 +10,13 @@ export default function Layout( {userData,setUserData}) {
   }
   return (
     <>
+    <div className={styles.Layout}>
     <NavBar userData={userData} logout={logout}/>
     
     <Outlet/>
     
     <Footer/>
+    </div>
     
     </>
   )

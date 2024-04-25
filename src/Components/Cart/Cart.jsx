@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import styles from'./Cart.module.css'
 import { CartContext } from '../../Context/CartContext'
 import {Helmet} from "react-helmet";
+import { Link } from 'react-router-dom';
 export default function Cart() {
-  let {getCart,updateCart,removeCartItem} =useContext(CartContext)
-  let[cartDetails,setCartDetails]=useState({});
+  let {getCart,updateCart,removeCartItem,setNumOfCartItems} =useContext(CartContext)
+  let[cartDetails,setCartDetails]=useState();
 
   async function getCartDetails() {
    let res= await getCart()
-   console.log(res.data.data.products);
+   if (res.data) {
+    console.log(res.data.data._id);
    setCartDetails(res.data);
+   }
   }
   async function updateCartDetails(id,count) {
    let res= await updateCart(id,count)
@@ -20,6 +23,7 @@ export default function Cart() {
    let res= await removeCartItem(id)
    console.log(res);
    setCartDetails(res.data);
+   setNumOfCartItems(res.data.numOfCartItems)
   }
   useEffect(()=>{
     getCartDetails()
@@ -30,9 +34,9 @@ export default function Cart() {
                 <meta charSet="utf-8" />
                 <title>Shop Cart</title>
             </Helmet>
-
-    {cartDetails && <div className="container">
-      <div className="bg-light p-5 my-5">
+   
+    {cartDetails? <div className={`container ${styles.allCart}`}>
+      <div className="bg-light p-5 mt-5">
         <h3>Cart Details</h3>
       <h4>Total price :{cartDetails.data?.totalCartPrice}</h4>
       {cartDetails.data?.products.map((product)=><div key={product.product.id} className={`row border-bottom ${styles.borderColer} p-2`}>
@@ -52,8 +56,10 @@ export default function Cart() {
           </div>
         </div>
       </div>)}
+      <Link to={'/checkout'} className='btn btn-cart3 bg-main text-white mt-3'>procced to payment</Link>
+
       </div>
-    </div>}
+    </div> : `There is no cart`}
     </>
   )
 }

@@ -1,13 +1,15 @@
 import './App.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './Components/Layout/Layout'
-import Home from './Components/Home/Home'
-import Login from './Components/Login/Login'
-import Register from './Components/Register/Register'
-import Cart from './Components/Cart/Cart'
-import Products from './Components/Products/Products'
-import ProductDetails from './Components/ProductDetails/ProductDetails.jsx'
-import NotFound from './Components/Notfond/Notfond'
+import { RouterProvider, createBrowserRouter, createHashRouter } from 'react-router-dom';
+import Layout from './Components/Layout/Layout';
+import Home from './Components/Home/Home';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
+import Cart from './Components/Cart/Cart';
+import Products from './Components/Products/Products';
+import ProductDetails from './Components/ProductDetails/ProductDetails.jsx';
+import NotFound from './Components/Notfond/Notfond';
+import Checkout from './Components/Checkout/Checkout.jsx';
+import Allorders from './Components/Allorders/Allorders.jsx';
 import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
@@ -42,7 +44,7 @@ function App() {
   <Home/>
   </ProtectedRoutes>
 },
-  {path:"home",element:
+  {path:"E-Commerce",element:
   <ProtectedRoutes>
     <Home/>
   </ProtectedRoutes>
@@ -56,6 +58,16 @@ function App() {
   {path:"cart",element:
     <ProtectedRoutes>
   <Cart/>
+  </ProtectedRoutes>
+},
+  {path:"checkout",element:
+    <ProtectedRoutes>
+  <Checkout/>
+  </ProtectedRoutes>
+},
+  {path:"allorders",element:
+    <ProtectedRoutes>
+  <Allorders/>
   </ProtectedRoutes>
 },
   {path:"products",element:
@@ -79,7 +91,8 @@ function App() {
           <Offline><span className='network-status'> You are offline</span></Offline>
           <CartContextProvider>
             <CounterContextProvider>
-            <Toaster />
+            <Toaster
+            position='top-left' />
                   <RouterProvider router={rootes}></RouterProvider>
             </CounterContextProvider>
         </CartContextProvider>
